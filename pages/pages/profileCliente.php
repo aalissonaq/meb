@@ -443,7 +443,8 @@
                           </li>
                         <li class=\"nav-item\">
                             <a href=\"\" class=\"btn btn-tool\" target=\"\"
-                            title=\"Ações\" rel=\"noopener noreferrer\">
+                            title=\"Ações\" rel=\"noopener noreferrer\"
+                            onclick=\"\" data-idPessoa=\"00\">
                             <i class=\"mdi mdi-book-cog-outline mdi-24px\"></i>
                             </a>
                           </li>
@@ -892,7 +893,12 @@
 </aside>
 
 <!-- ./wrapper -->
+<script>
+  function setaDadosModal(valor) {
+    document.getElementById('idPessoaCliente').value = valor;
 
+  }
+</script>
 <script>
   //document.getElementById('gestaoMenu').classList.add("menu-open");
   //document.getElementById('gestaoMenuActive').classList.add("active");
