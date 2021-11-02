@@ -22,6 +22,6 @@ if (isset($_POST['gravar']) && $_POST['gravar'] == 'gravar') {
     inseir('logs', $log);
   }
   echo "<script type='text/javascript'> alert('O Processo foi Cadastrado com sucesso !');
-          window.location = '../../../inicio.php?page=processos&id={$dados['idcliente']}';
+          history.go(-1);
         </script>";
 }

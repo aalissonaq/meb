@@ -132,17 +132,13 @@
             <div class="card-body">
 
 
-              <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+              <strong><i class="fas fa-map-marker-alt mr-1"></i> Endereço</strong>
 
               <p class="text-muted" style="text-transform: uppercase;">
                 <?= $dcliente['stLogradouroPessoa'] . ", " . $dcliente['nnCasaPessoa'] . " <br/>" . $dcliente['stBairroPessoa'] . " <br/> " . $dcliente['stCidadePessoa'] . "-" . $dcliente['stEstadoPessoa'] . " CEP:" . $dcliente['stCepPessoa'] ?>
-
               </p>
-
               <hr>
-
               <!-- <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
-
               <p class="text-muted">
                 <span class="tag tag-danger">UI Design</span>
                 <span class="tag tag-success">Coding</span>
@@ -150,12 +146,10 @@
                 <span class="tag tag-warning">PHP</span>
                 <span class="tag tag-primary">Node.js</span>
               </p>
-
               <hr> -->
+              <!-- <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
 
-              <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
-
-              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+              <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p> -->
             </div>
             <!-- /.card-body -->
           </div>
@@ -341,7 +335,12 @@
                 <div class="active tab-pane" id="process">
                   <!-- Processos -->
 
-                  <div class="table-responsive">
+                  <a href="" class="btn btn-tool text-orange float-right" data-toggle="modal" data-target="#modal-novoProdesso" style="font-family:'Advent Pro', sans-serif; font-weight: bold; font: size 20px; letter-spacing: 1px; margin-bottom:1rem">
+                    <i class="fa fa-plus-square fa-fw fa-2x align-middle"></i>
+                    Novo Processos</a>
+
+
+                  <div class="table-responsive ">
                     <table id="tabela" class="tableP table-sm table-striped table-hover">
                       <thead class="" style="font-family: 'Advent Pro', sans-serif;">
                         <tr>
@@ -873,6 +872,117 @@
       </div>
       <!-- /.row -->
     </div>
+    <!-- MODAL NOVO PROCESSO -->
+    <div class="modal fade" id="modal-novoProdesso">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" style="font-family: 'Advent Pro', sans-serif; font-weight: 500; letter-spacing: 1px; color:orange">Novo Proceso:&nbsp;
+            </h5>
+            <h5 class="modal-title text-primary" style="font-family: 'Advent Pro', sans-serif; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;">
+              <?= ' ' . $dcliente['nmPessoa']; ?>
+            </h5>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- form novo Usuário -->
+
+            <form class="needs-validation" novalidate action="./pages/pages/acoes/gravaNovoProcesso.php" method="POST" enctype="multipart/form-data">
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label for="objprocesso">Objeto do Processo
+                    <span class="text-orange">*</span>
+                  </label>
+                  <input type="text" name="objprocesso" class="form-control text-uppercase  " id="objprocesso" placeholder="Objeto do Processo" value="" required>
+                  <div class="invalid-feedback">
+                    Obrigatório !
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label for="descricaoprocesso">Descrição do Processo
+                    <span class="text-orange">*</span>
+                  </label>
+
+                  <textarea class="form-control" name="descricaoprocesso" id="descricaoprocesso" placeholder="Decrição detalhada do processo/caso" name="validation" rows="4" required></textarea>
+
+                  <div class="invalid-feedback">
+                    Obrigatório !
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="col-md-4">
+                  <label for="numprocesso">Nº Processo (CNJ)</label>
+                  <input type="text" maxlength="19" name="numprocesso" class="form-control text-uppercase js_numCNJ" id="numprocesso" placeholder="Número do Processo" value="">
+                  <div class="invalid-feedback">
+                    Obrigatório !
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label for="areaprocesso">Área da Ação
+                    <span class="text-orange">*</span>
+                  </label>
+                  <select class="form-control text-uppercase" required name="areaprocesso" id="areaprocesso">
+                    <!--<option value="" selected disabled>Área do ação</option>-->
+                    <option value="adminsitrativo">Administrativo</option>
+                    <option value="previdenciario">Previdenciário</option>
+                    <option value="trabalhista">Trabalhista</option>
+
+                  </select>
+                  <div class="invalid-feedback">
+                    Obrigatório !
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label for="statusprocesso">Status
+                    <span class="text-orange">*</span>
+                  </label>
+                  <select class="form-control text-uppercase" required name="statusprocesso" id="statusprocesso">
+                    <option value="aguardando">Aguardando Documento</option>
+                    <option value="pericia">Perícia ou Agendamento</option>
+                    <option value="prorrogacao">Prorrogação</option>
+                    <option value="exigencia">Exigência</option>
+                    <option value="aguardandoINSS">Aguardando Resposta do INSS</option>
+                    <option value="justFederal">Justiça Federal </option>
+
+                  </select>
+                  <div class="invalid-feedback">
+                    Obrigatório !
+                  </div>
+                </div>
+              </div>
+
+
+          </div>
+          <div class="modal-footer justify-content-between">
+            <input type="hidden" name="idcliente" value="<?= $id; ?>">
+            <input type="hidden" name="idadvogado" value="0">
+            <input type="hidden" name="nomeCliente" value="<?= $dcliente['nmPessoa']; ?>">
+            <input type="hidden" name="userActionLog" value="<?= $_SESSION['USUARIO']; ?>">
+            <input type="hidden" name="gravar" value="gravar">
+            <button type="button" class="btn btn-outline-danger" data-dismiss="modal"><i class="fas fa-times fa-fw fa-lg"></i>
+              Fechar </button>
+            <button class="btn btn-success btn-lg" type="submit">
+              <i class="far fa-save fa-fw fa-lg"></i>
+              Gravar Dados</button>
+            </form>
+            <!--/form novo Usuario -->
+            <!-- <button type="button" class="btn btn-success">Save changes</button> -->
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+
   <?php } ?>
   <!-- /.container-fluid -->
 </section>

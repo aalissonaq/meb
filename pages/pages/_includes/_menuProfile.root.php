@@ -29,9 +29,7 @@ echo
                       <button
                       data-toggle=\"modal\"
                       data-target=\"#modal-edtFoto\"
-                      data-id=\"{$dados['idPessoaCliente']}\"
-                      onclick=\"setaDadosModal({$dados['idPessoaCliente']})\"
-                      class=\"btn btn-tool \"
+                                            class=\"btn btn-tool \"
                       target=\"\"
                       title=\"Trocar Foto\"
                       rel=\"noopener noreferrer\" >
@@ -51,3 +49,15 @@ echo
                 // rel=\"noopener noreferrer\">
                 //   <i class=\"mdi mdi-scale-balance mdi-24px fa fa-fw\"></i>
                 // </a>
+
+                // <button
+                //       data-toggle=\"modal\"
+                //       data-target=\"#modal-edtFoto\"
+                //       data-id=\"{@$dados['idPessoaCliente']}\"
+                //       onclick=\"setaDadosModal({$dados['idPessoaCliente']})\"
+                //       class=\"btn btn-tool \"
+                //       target=\"\"
+                //       title=\"Trocar Foto\"
+                //       rel=\"noopener noreferrer\" >
+                //         <i class=\"mdi mdi-camera-flip-outline mdi-24px fa fa-fw\"></i>
+                //       </button>
