@@ -68,7 +68,19 @@
                 <?php
                 switch ($_SESSION['NIVEL']) {
                   case '0':
-                    include '_includes/_menuProfile.root.php';
+                ?>
+
+                    <a href="?page=listarClientes" class="btn btn-tool " target="" title="Voltar" rel="noopener noreferrer">
+                      <i class="mdi mdi-arrow-left-circle-outline mdi-24px fa fa-fw"></i>
+                    </a>
+                    <a href="#settings" class="btn btn-tool" target="" data-toggle="tab" title="Editar Dados" rel="noopener noreferrer">
+                      <i class="mdi mdi-account-edit-outline mdi-24px fa fa-fw"></i>
+                    </a>
+
+                    <button data-toggle="modal" data-target="#modal-edtFoto" data-id="<?= $idEdit ?>" onclick="setaDadosModal(<?= $idEdit ?> )" class="btn btn-tool \" target="" title="Trocar Foto" rel="noopener noreferrer\">
+                      <i class="mdi mdi-camera-flip-outline mdi-24px fa fa-fw"></i>
+                    </button>
+                <?php
                     break;
 
 
@@ -83,7 +95,7 @@
               <ul class="list-group list-group-unbordered mb-3">
                 <li class="list-group-item">
                   <b><i class="fas fa-lg fa-phone text-primary"></i> </b>
-                  <a href="tel:<?= tiraMascara($dcliente['nnTelefonePessoa']) ?>" class="" style="font-size:1.1rem">
+                  <a href="tel:<?= tiraMascara($dcliente['nnTelefonePessoa']) ?>" class="" style="font-size:1rem">
                     <?= $dcliente['nnTelefonePessoa'] ?>
                   </a>
 
@@ -104,7 +116,7 @@
                     <i class="fas fa-fw fa-lg fa-envelope text-primary"></i>
                   </b>
                   <!-- <span class="float-right"> -->
-                  <a href="mailto:<?= $dcliente['stEmailPessoa'] ?>" class="" style="font-size:1.2rem">
+                  <a href="mailto:<?= $dcliente['stEmailPessoa'] ?>" class="" style="font-size:.95rem">
                     <?= $dcliente['stEmailPessoa'] ?>
                   </a>
                   </a>
@@ -347,7 +359,8 @@
                           <th class="col-md-1 text-center align-middle">
                             <i class="fas fa-hashtag fa-fw"></i>
                           </th>
-                          <th class="col-mb-3 text-center align-middle ">ÁREA</th>
+                          <th class="col-mb-2 text-center align-middle ">C. PARTE</th>
+                          <th class="col-mb-2 text-center align-middle ">ÁREA</th>
                           <th class="col-mb-2 text-center align-middle">N° DO PROCESSO (CNJ)</th>
                           <th class="col-md-2 text-center align-middle">STATU</th>
                           <th class="col-md-3 text-center align-middle">
@@ -364,8 +377,12 @@
                           $count++;
                         ?>
                           <tr class="">
-                            <td class="col-md-1 text-uppercase align-middle text-center">
-                              <?= str_pad($count, 2, "0", STR_PAD_LEFT); ?>
+                            <td class=" text-uppercase align-middle text-center" style="font-size: .9rem;">
+                              <!-- //str_pad($count, 2, "0", STR_PAD_LEFT); -->
+                              <?= $dadosProcesso['niprocesso']; ?>
+                            </td>
+                            <td class=" text-uppercase align-middle text-center">
+                              <?= $dadosProcesso['contraparte'] ?>
                             </td>
                             <td class="text-uppercase align-middle text-center">
                               <?php
@@ -388,7 +405,7 @@
                             <td class="text-uppercase align-middle text-center">
                               <?= isset($dadosProcesso['numprocesso']) && $dadosProcesso['numprocesso'] > 0 ? MascaraCNJ(str_pad($dadosProcesso['numprocesso'], 19, "0", STR_PAD_LEFT)) : 'Processo sem Número'; ?>
                             </td>
-                            <td class="text-uppercase align-middle d-flex justify-content-between align-items-center" style="font-size: .94rem; ">
+                            <td class="text-uppercase align-middle d-flex justify-content-between align-items-center" style="font-size: .8rem; ">
                               <?php
                               switch ($dadosProcesso['statusprocesso']) {
                                 case 'aguardando':
@@ -442,7 +459,9 @@
                           </li>
                         <li class=\"nav-item\">
                             <a href=\"\" class=\"btn btn-tool\" target=\"\"
-                            title=\"Ações\" rel=\"noopener noreferrer\"
+                            title=\"Adicionar Tarefas\" rel=\"noopener noreferrer\"
+                            data-toggle=\"modal\"
+                            data-target=\"#modal-novaTarefa\"
                             onclick=\"\" data-idPessoa=\"00\">
                             <i class=\"mdi mdi-book-cog-outline mdi-24px\"></i>
                             </a>
@@ -872,15 +891,68 @@
       </div>
       <!-- /.row -->
     </div>
-    <!-- MODAL NOVO PROCESSO -->
-    <div class="modal fade" id="modal-novoProdesso">
+
+    <!-- MODAL EDITAR FOTO -->
+    <div class="modal fade" id="modal-edtFoto">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title" style="font-family: 'Advent Pro', sans-serif; font-weight: 500; letter-spacing: 1px; color:#C77129">
+              Nova Foto do Cliente</h4>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- form novo Usuário -->
+
+            <form class="needs-validation" novalidate action="./pages/pages/acoes/editarFotoCliente.php" method="POST" enctype="multipart/form-data">
+
+              <input type="hidden" name="idPessoaCliente" id="idPessoaCliente" value="">
+              <input type="hidden" name="nomePessoa" id="nomePessoa" value="<?= $dcliente['nmPessoa']; ?>">
+
+              <div class="form-row">
+                <div class="col-md-12 mb-3">
+                  <label for="nnTelefonePessoa">Foto/Logo do Cliente <span class="text-orange">*</span>
+
+                  </label>
+                  <input type="file" name="imgCliente" class="form-control-lg text-uppercase" id="imgCliente" placeholder="">
+                  <div class="invalid-feedback">
+                    Obrigatório !
+                  </div>
+                </div>
+
+              </div>
+
+          </div>
+          <div class="modal-footer justify-content-between">
+
+            <input type="hidden" name="userActionLog" value="<?php echo $_SESSION['USUARIO']; ?>" />
+            <input type="hidden" name="gravar" value="gravar" />
+            <button type="button" class="btn btn-outline-danger btn-lg" data-dismiss="modal">
+              <i class="fas fa-times fa-fw fa-lg"></i>
+              Fechar </button>
+            <button class="btn btn-success btn-lg" type="submit">
+              <i class="far fa-save fa-fw fa-lg"></i>
+              Gravar Dados</button>
+            </form>
+            <!--/form novo Usuario -->
+            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <!-- MODAL NOVA TAREFA -->
+    <div class="modal fade" id="modal-novaTarefa">
       <div class="modal-dialog modal-xl">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" style="font-family: 'Advent Pro', sans-serif; font-weight: 500; letter-spacing: 1px; color:orange">Novo Proceso:&nbsp;
-            </h5>
-            <h5 class="modal-title text-primary" style="font-family: 'Advent Pro', sans-serif; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;">
-              <?= ' ' . $dcliente['nmPessoa']; ?>
+            <h5 class="modal-title" style="font-family: 'Advent Pro', sans-serif; font-weight: 500; letter-spacing: 1px; color:orange">Nova Tarefa&nbsp;
             </h5>
 
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -892,7 +964,7 @@
 
             <form class="needs-validation" novalidate action="./pages/pages/acoes/gravaNovoProcesso.php" method="POST" enctype="multipart/form-data">
               <div class="form-row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <label for="objprocesso">Objeto do Processo
                     <span class="text-orange">*</span>
                   </label>
@@ -901,6 +973,140 @@
                     Obrigatório !
                   </div>
                 </div>
+
+                <div class="col-md-6">
+                  <label for="contraparte">Parte Contraria
+                    <span class="text-orange">*</span>
+                  </label>
+                  <input type="text" name="contraparte" class="form-control text-uppercase  " id="contraparte" placeholder=" Parte Contraria" value="" required>
+                  <div class="invalid-feedback">
+                    Obrigatório !
+                  </div>
+                </div>
+
+              </div>
+              <div class="form-row">
+                <div class="col-md-12">
+                  <label for="descricaoprocesso">Descrição do Processo
+                    <span class="text-orange">*</span>
+                  </label>
+
+                  <textarea class="form-control" name="descricaoprocesso" id="descricaoprocesso" placeholder="Decrição detalhada do processo/caso" name="validation" rows="4" required></textarea>
+
+                  <div class="invalid-feedback">
+                    Obrigatório !
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="col-md-4">
+                  <label for="numprocesso">Nº Processo (CNJ)</label>
+                  <input type="text" maxlength="19" name="numprocesso" class="form-control text-uppercase js_numCNJ" id="numprocesso" placeholder="Número do Processo" value="">
+                  <div class="invalid-feedback">
+                    Obrigatório !
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label for="areaprocesso">Área da Ação
+                    <span class="text-orange">*</span>
+                  </label>
+                  <select class="form-control text-uppercase" required name="areaprocesso" id="areaprocesso">
+                    <!--<option value="" selected disabled>Área do ação</option>-->
+                    <option value="adminsitrativo">Administrativo</option>
+                    <option value="previdenciario">Previdenciário</option>
+                    <option value="trabalhista">Trabalhista</option>
+
+                  </select>
+                  <div class="invalid-feedback">
+                    Obrigatório !
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label for="statusprocesso">Status
+                    <span class="text-orange">*</span>
+                  </label>
+                  <select class="form-control text-uppercase" required name="statusprocesso" id="statusprocesso">
+                    <option value="aguardando">Aguardando Documento</option>
+                    <option value="pericia">Perícia ou Agendamento</option>
+                    <option value="prorrogacao">Prorrogação</option>
+                    <option value="exigencia">Exigência</option>
+                    <option value="aguardandoINSS">Aguardando Resposta do INSS</option>
+                    <option value="justFederal">Justiça Federal </option>
+
+                  </select>
+                  <div class="invalid-feedback">
+                    Obrigatório !
+                  </div>
+                </div>
+              </div>
+
+
+          </div>
+          <div class="modal-footer justify-content-between">
+            <input type="hidden" name="idcliente" value="<?= $id; ?>">
+            <input type="hidden" name="idadvogado" value="0">
+            <input type="hidden" name="nomeCliente" value="<?= $dcliente['nmPessoa']; ?>">
+            <input type="hidden" name="userActionLog" value="<?= $_SESSION['USUARIO']; ?>">
+            <input type="hidden" name="gravar" value="gravar">
+            <button type="button" class="btn btn-outline-danger" data-dismiss="modal"><i class="fas fa-times fa-fw fa-lg"></i>
+              Fechar </button>
+            <button class="btn btn-success btn-lg" type="submit">
+              <i class="far fa-save fa-fw fa-lg"></i>
+              Gravar Dados</button>
+            </form>
+            <!--/form novo Usuario -->
+            <!-- <button type="button" class="btn btn-success">Save changes</button> -->
+          </div>
+        </div>
+        <!-- /.modal-content -->
+      </div>
+      <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <!-- MODAL NOVO PROCESSO -->
+    <div class="modal fade" id="modal-novoProdesso">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" style="font-family: 'Advent Pro', sans-serif; font-weight: 500; letter-spacing: 1px; color:orange">Novo Proceso nº:&nbsp;
+            </h5>
+            <h5 class="modal-title text-primary" style="font-family: 'Advent Pro', sans-serif; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;">
+              <?php
+              echo nProcesso("processos", "{$_GET['id']}");
+              ?>
+            </h5>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- form novo Usuário -->
+
+            <form class="needs-validation" novalidate action="./pages/pages/acoes/gravaNovoProcesso.php" method="POST" enctype="multipart/form-data">
+              <input type="hidden" name="niprocesso" value="<?= nProcesso("processos", "{$_GET['id']}"); ?>" />
+              <div class="form-row">
+                <div class="col-md-6">
+                  <label for="objprocesso">Objeto do Processo
+                    <span class="text-orange">*</span>
+                  </label>
+                  <input type="text" name="objprocesso" class="form-control text-uppercase  " id="objprocesso" placeholder="Objeto do Processo" value="" required>
+                  <div class="invalid-feedback">
+                    Obrigatório !
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="contraparte">Parte Contraria
+                    <span class="text-orange">*</span>
+                  </label>
+                  <input type="text" name="contraparte" class="form-control text-uppercase  " id="contraparte" placeholder=" Parte Contraria" value="" required>
+                  <div class="invalid-feedback">
+                    Obrigatório !
+                  </div>
+                </div>
+
               </div>
               <div class="form-row">
                 <div class="col-md-12">
@@ -1004,8 +1210,14 @@
 
 <!-- ./wrapper -->
 <script>
+  function setaDadosModalProcesso(valor) {
+    document.getElementById('idPessoaCliente').value = valor;
+
+  }
+
   function setaDadosModal(valor) {
     document.getElementById('idPessoaCliente').value = valor;
+    alert(valor);
 
   }
 </script>

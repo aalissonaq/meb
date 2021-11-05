@@ -27,9 +27,12 @@ echo
 
 
                       <button
+
                       data-toggle=\"modal\"
                       data-target=\"#modal-edtFoto\"
-                                            class=\"btn btn-tool \"
+                      data-id=\"<?= @$id ?>\"
+                      onclick=\"setaDadosModal(<?= @$id ?> )\"
+                      class=\"btn btn-tool \"
                       target=\"\"
                       title=\"Trocar Foto\"
                       rel=\"noopener noreferrer\" >

@@ -129,7 +129,7 @@
                       echo "./upload/imgClientes/default.png";
                     } ?>" alt="
                   <?php echo $dados['nmPessoa'] ?>" class="img-circle img-fluid shadow " style="width:10rem; height:10rem; object-fit: cover;" />
-                    <a class="btn btn-tool text-warning" href="" data-toggle="modal" data-target="#modal-edtFoto" data-id="<?= $dados['idPessoaCliente'] ?>" style="z-index: 9; top:-20px;" title="" onclick="setaDadosModal(<?= $dados['idPessoaCliente'] ?> )">
+                    <a class="btn btn-tool text-warning" href="" data-toggle="modal" data-target="#modal-edtFoto" data-id="<?= $dados['idPessoaCliente'] ?>" onclick="setaDadosModal(<?= $dados['idPessoaCliente'] ?> )" style="z-index: 9; top:-20px;" title="Mudar foto">
                       <i class="mdi mdi-camera-flip-outline "></i>
 
                     </a>

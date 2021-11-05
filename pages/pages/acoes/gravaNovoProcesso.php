@@ -6,8 +6,10 @@ require_once './../../../data/outfunc.php';
 if (isset($_POST['gravar']) && $_POST['gravar'] == 'gravar') {
 
   $dados['idcliente'] = strip_tags(strip_tags(trim($_POST['idcliente'])));
+  $dados['niprocesso'] = strip_tags(strip_tags(trim($_POST['niprocesso'])));
   $dados['idadvogado'] = strip_tags(strip_tags(trim($_POST['idadvogado'])));
   $dados['objprocesso'] = strip_tags(strip_tags(trim($_POST['objprocesso'])));
+  $dados['contraparte'] = strip_tags(strip_tags(trim($_POST['contraparte'])));
   $dados['descricaoprocesso'] = strip_tags(strip_tags(trim($_POST['descricaoprocesso'])));
   $dados['numprocesso'] = $_POST['numprocesso'] == '' ? '0' : strip_tags(strip_tags(trim(tiraMascara($_POST['numprocesso']))));
   $dados['areaprocesso'] = strip_tags(strip_tags(trim($_POST['areaprocesso'])));

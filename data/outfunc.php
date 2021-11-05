@@ -317,6 +317,19 @@ function nContrato($tabela, $casas)
   $mes = date("m", time());
   return $ano . $mes . $nContato;
 }
+/* * ***************************
+  GERA NUMERO DE PROCESSO
+ * *************************** */
+
+//function matricula($tabela, $coluna, $casas) {
+function nProcesso($tabela, $idCliente)
+{
+  $contratos = ler($tabela)->rowCount();
+  $sequencia = $contratos + 1;
+  $nProcess = str_pad($sequencia, 5, "0", STR_PAD_LEFT);
+  $ano = date("Y", time());
+  return $idCliente . $ano . $nProcess;
+}
 
 /* * ***************************
   UPLOAD DE AQUIVOS
@@ -479,7 +492,7 @@ function tiraMascara($dado)
 
 function MascaraCNJ($dado)
 {
-  $mascaraCNJ = substr($dado, 0, 7) . "-" . substr($dado, 7, 2) . "." . substr($dado, 9, 4).".".substr($dado,13,2) . "." . substr($dado, -4);
+  $mascaraCNJ = substr($dado, 0, 7) . "-" . substr($dado, 7, 2) . "." . substr($dado, 9, 4) . "." . substr($dado, 13, 2) . "." . substr($dado, -4);
   return $mascaraCNJ;
 }
 
