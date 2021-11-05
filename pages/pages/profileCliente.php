@@ -44,7 +44,7 @@
                 " class="profile-user-img img-fluid img-circle" alt="User profile picture">
               </div>
 
-              <h3 class="profile-username text-center" style="font-family:'Advent Pro', sans-serif; font-weight: bold; color: #C77129; ">
+              <h3 class="profile-username text-center" style="font-family:'Advent Pro', sans-serif; font-weight: 600; color: #C77129; ">
                 <?php
                 if ($dcliente['nmPessoaSocial'] == '') {
                   $nome =  explode(' ', $dcliente['nmPessoa']);
@@ -200,11 +200,86 @@
             <div class="card-body">
               <div class="tab-content">
                 <div class="active tab-pane" id="toayTask">
-                  <!-- Processos -->
+                  <!-- Tarefas -->
 
-                  Tarefas agendados pra hoje ou Vencidas
+                  <div class="table-responsive ">
+                    <table id="tabela" class="table table-sm table-striped table-hover">
+                      <thead class="" style="font-family: 'Advent Pro', sans-serif;">
+                        <tr>
+                          <th class="col-md-1 text-center align-middle">
+                            <i class="fas fa-hashtag fa-fw"></i>
+                          </th>
+                          <th class="col-mb-2 text-center align-middle ">Tarefa</th>
+                          <th class="col-mb-2 text-center align-middle ">Rsponsável</th>
+                          <th class="col-mb-2 text-center align-middle ">Data e Hora</th>
 
-                  <!-- /.processo -->
+                          <th class="col-md-auto text-center align-middle">
+                            <i class="fab fa-lg fa-fw fa-whmcs" title="Ações"></i>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+
+                        <?php
+                        $id = $_GET['id'];
+                        $count = 0;
+                        foreach (ler('tarefas', '', "WHERE idpessoa = {$id}")->fetchAll(PDO::FETCH_ASSOC) as $dadosTarefa) {
+                          $count++;
+                        ?>
+                          <tr class="">
+                            <td class=" text-uppercase align-middle text-center" style="font-size: .9rem;">
+                              <!-- //str_pad($count, 2, "0", STR_PAD_LEFT); -->
+
+                            </td>
+
+                            <td class="text-uppercase align-middle text-center">
+                              <?= $dadosTarefa['decricaoTarefa']; ?>
+                            </td>
+
+                            <td class="text-uppercase align-middle text-center" style="font-size: .9rem; ">
+                              <?php
+                              foreach (ler('pessoa', '', "WHERE idPessoa ={$dadosTarefa['idResponsavel']} ")->fetchAll(PDO::FETCH_ASSOC) as $dadosPessoa) {
+                                echo $dadosPessoa['nmPessoa'];
+                              }
+                              ?>
+                            </td>
+
+                            <td class="text-uppercase align-middle text-center">
+                              <?= date("d/m/Y ", strtotime($dadosTarefa['hora'])); ?>
+                              as
+                              <?= date(" H:i", strtotime($dadosTarefa['hora'])); ?>
+                            </td>
+
+                            <td class="text-uppercase align-middle  ">
+                              <ul class="nav justify-content-center d-flex justify-content-evenly">
+                                <?php
+                                switch ($_SESSION['NIVEL']) {
+                                  case '0':
+                                ?>
+                                    <li class="nav-item">
+                                      <a href="" class="btn btn-tool" target="" title="Visializar Processo" rel="noopener noreferrer">
+                                        <i class="mdi mdi-file-eye-outline mdi-24px "></i>
+                                      </a>
+                                    </li>
+
+
+                                <?php
+                                    break;
+
+                                  default:
+                                    //TESTE DE STATUS
+                                    break;
+                                }
+                                ?>
+                              </ul>
+                            </td>
+                          </tr>
+                        <?php } ?>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- /.tarefas -->
 
                 </div>
                 <!-- /.tab-pane -->
@@ -363,7 +438,7 @@
                           <th class="col-mb-2 text-center align-middle ">ÁREA</th>
                           <th class="col-mb-2 text-center align-middle">N° DO PROCESSO (CNJ)</th>
                           <th class="col-md-2 text-center align-middle">STATU</th>
-                          <th class="col-md-3 text-center align-middle">
+                          <th class="col-md-auto text-center align-middle">
                             <i class="fab fa-lg fa-fw fa-whmcs" title="Ações"></i>
                           </th>
                         </tr>
@@ -444,29 +519,24 @@
                                 <?php
                                 switch ($_SESSION['NIVEL']) {
                                   case '0':
-                                    echo "
-                        <li class=\"nav-item\">
-                            <a href=\"\" class=\"btn btn-tool\" target=\"\"
-                            title=\"Visializar Processo\" rel=\"noopener noreferrer\">
-                            <i class=\"mdi mdi-file-eye-outline mdi-24px \"></i>
-                            </a>
-                          </li>
-                        <li class=\"nav-item\">
-                            <a href=\"\" class=\"btn btn-tool\" target=\"\"
-                            title=\"Histórico\" rel=\"noopener noreferrer\">
-                            <i class=\"mdi mdi-calendar-clock-outline mdi-24px \"></i>
-                            </a>
-                          </li>
-                        <li class=\"nav-item\">
-                            <a href=\"\" class=\"btn btn-tool\" target=\"\"
-                            title=\"Adicionar Tarefas\" rel=\"noopener noreferrer\"
-                            data-toggle=\"modal\"
-                            data-target=\"#modal-novaTarefa\"
-                            onclick=\"\" data-idPessoa=\"00\">
-                            <i class=\"mdi mdi-book-cog-outline mdi-24px\"></i>
-                            </a>
-                          </li>
-                        ";
+                                ?>
+                                    <li class="nav-item">
+                                      <a href="" class="btn btn-tool" target="" title="Visializar Processo" rel="noopener noreferrer">
+                                        <i class="mdi mdi-file-eye-outline mdi-24px "></i>
+                                      </a>
+                                    </li>
+                                    <li class="nav-item">
+                                      <a href="" class="btn btn-tool" target="" title="Histórico" rel="noopener noreferrer">
+                                        <i class="mdi mdi-calendar-clock-outline mdi-24px "></i>
+                                      </a>
+                                    </li>
+                                    <li class="nav-item">
+                                      <a href="" class="btn btn-tool" target="" title="Adicionar Tarefas" rel="noopener noreferrer" data-toggle="modal" data-target="#modal-novaTarefa" onclick="modalIdProcesso(<?= $dadosProcesso['idprocesso'] ?>)">
+                                        <i class="mdi mdi-book-cog-outline mdi-24px"></i>
+                                      </a>
+                                    </li>
+
+                                <?php
                                     break;
 
                                   default:
@@ -962,36 +1032,76 @@
           <div class="modal-body">
             <!-- form novo Usuário -->
 
-            <form class="needs-validation" novalidate action="./pages/pages/acoes/gravaNovoProcesso.php" method="POST" enctype="multipart/form-data">
+            <form class="needs-validation" novalidate action="./pages/pages/acoes/gravaNovaTarefa.php" method="POST" enctype="multipart/form-data">
+
+              <input type="hidden" name="idCreador" id="idCreador" value="<?= $_SESSION['ID']; ?>" />
+              <input type="hidden" name="idProcesso" id="idProcesso" value="" />
+              <input type="hidden" name="idpessoa" id="" value="<?= $_GET['id']; ?>" />
+
               <div class="form-row">
-                <div class="col-md-6">
-                  <label for="objprocesso">Objeto do Processo
+                <div class="col-md-12">
+                  <label for="idResponsavel">Responsavel
                     <span class="text-orange">*</span>
                   </label>
-                  <input type="text" name="objprocesso" class="form-control text-uppercase  " id="objprocesso" placeholder="Objeto do Processo" value="" required>
+
+                  <select class="form-control text-uppercase custom-select" name="idResponsavel" id="idResponsavel">
+                    <option value="" selected disabled>Selecione Responsavel </option>
+                    <?php
+                    foreach (ler('vw_pessoa_user', '', 'WHERE nivelUser > 0 and flStatusUser = 1')->fetchAll(PDO::FETCH_ASSOC) as $users) {
+                    ?>
+
+                      <option value="<?= $users['idPessoaPessoa'] ?>"><?= $users['nmPessoa'] . ' - ' ?>
+                        <?php
+                        switch ($users['nivelUser']) {
+                          case '1':
+                            echo 'Administrador';
+                            break;
+                          case '2':
+                            echo 'Secretário(a) / Atendente';
+                            break;
+                          case '3':
+                            echo 'Advogado(a) / Parceiro(a)';
+                            break;
+
+                          default:
+                            # code...
+                            break;
+                        }
+
+                        ?>
+                      </option>
+                    <?php } ?>
+
+
+                  </select>
+                  <div class="invalid-feedback">
+                    A seleção é Obrigatório !
+                  </div>
+
+                  <!-- <input type="text" name="objprocesso" class="form-control text-uppercase" disabled id="objprocesso" placeholder="Objeto do Processo" value="" required/>
                   <div class="invalid-feedback">
                     Obrigatório !
-                  </div>
+                  </div> -->
                 </div>
 
-                <div class="col-md-6">
-                  <label for="contraparte">Parte Contraria
+                <!-- <div class="col-md-6">
+                  <label for="contraparte">Processo
                     <span class="text-orange">*</span>
                   </label>
-                  <input type="text" name="contraparte" class="form-control text-uppercase  " id="contraparte" placeholder=" Parte Contraria" value="" required>
+                  <input type="text" name="contraparte" class="form-control text-uppercase  " id="contraparte" placeholder=" Parte Contraria" value="" >
                   <div class="invalid-feedback">
                     Obrigatório !
                   </div>
-                </div>
+                </div> -->
 
               </div>
               <div class="form-row">
                 <div class="col-md-12">
-                  <label for="descricaoprocesso">Descrição do Processo
+                  <label for="decricaoTarefa">O que deverá ser feito ?
                     <span class="text-orange">*</span>
                   </label>
 
-                  <textarea class="form-control" name="descricaoprocesso" id="descricaoprocesso" placeholder="Decrição detalhada do processo/caso" name="validation" rows="4" required></textarea>
+                  <textarea class="form-control" name="decricaoTarefa" id="decricaoTarefa" placeholder="Decrição da tarefa" name="validation" rows="4" required></textarea>
 
                   <div class="invalid-feedback">
                     Obrigatório !
@@ -1000,55 +1110,57 @@
               </div>
 
               <div class="form-row">
-                <div class="col-md-4">
-                  <label for="numprocesso">Nº Processo (CNJ)</label>
-                  <input type="text" maxlength="19" name="numprocesso" class="form-control text-uppercase js_numCNJ" id="numprocesso" placeholder="Número do Processo" value="">
+                <div class="col-md-3">
+                  <label for="dtTarefa">Data da tarefa
+                    <span class="text-orange">*</span>
+                  </label>
+                  <input type="date" maxlength="19" name="dtTarefa" class="form-control text-uppercase" id="dtTarefa" placeholder="" value="" required />
                   <div class="invalid-feedback">
                     Obrigatório !
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <label for="areaprocesso">Área da Ação
-                    <span class="text-orange">*</span>
-                  </label>
-                  <select class="form-control text-uppercase" required name="areaprocesso" id="areaprocesso">
-                    <!--<option value="" selected disabled>Área do ação</option>-->
-                    <option value="adminsitrativo">Administrativo</option>
-                    <option value="previdenciario">Previdenciário</option>
-                    <option value="trabalhista">Trabalhista</option>
-
-                  </select>
+                <div class="col-md-2">
+                  <label for="hora">Hora da tarefa</label>
+                  <input type="time" maxlength="19" name="hora" class="form-control text-uppercase" id="hora" placeholder="" value="">
                   <div class="invalid-feedback">
                     Obrigatório !
                   </div>
                 </div>
-                <div class="col-md-4">
-                  <label for="statusprocesso">Status
-                    <span class="text-orange">*</span>
-                  </label>
-                  <select class="form-control text-uppercase" required name="statusprocesso" id="statusprocesso">
-                    <option value="aguardando">Aguardando Documento</option>
-                    <option value="pericia">Perícia ou Agendamento</option>
-                    <option value="prorrogacao">Prorrogação</option>
-                    <option value="exigencia">Exigência</option>
-                    <option value="aguardandoINSS">Aguardando Resposta do INSS</option>
-                    <option value="justFederal">Justiça Federal </option>
 
-                  </select>
+                <div class="col-md-7">
+                  <label for="statusprocesso">Local do Compromisso</label>
+
+                  </label>
+                  <input type="text" maxlength="19" name="local" class="form-control text-uppercase" id="local" placeholder="Local onde sera realizada a terefa" value="" />
                   <div class="invalid-feedback">
                     Obrigatório !
                   </div>
                 </div>
               </div>
+              <br />
+              <div class="form-row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="icheck-primary d-inline ">
+                      <input type="checkbox" id="restingir" name="restingir" />
+                      <label for="restingir">
+                        Restrigir Tarefa ao Rsponsável
+                      </label>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
 
 
           </div>
           <div class="modal-footer justify-content-between">
-            <input type="hidden" name="idcliente" value="<?= $id; ?>">
-            <input type="hidden" name="idadvogado" value="0">
-            <input type="hidden" name="nomeCliente" value="<?= $dcliente['nmPessoa']; ?>">
-            <input type="hidden" name="userActionLog" value="<?= $_SESSION['USUARIO']; ?>">
-            <input type="hidden" name="gravar" value="gravar">
+            <input type="hidden" name="idcliente" value="<?= $id; ?>" />
+            <input type="hidden" name="idadvogado" value="0" />
+            <input type="hidden" name="nomeCliente" value="<?= $dcliente['nmPessoa']; ?>" />
+            <input type="hidden" name="userActionLog" value="<?= $_SESSION['USUARIO']; ?>" />
+            <input type="hidden" name="gravar" value="gravar" />
             <button type="button" class="btn btn-outline-danger" data-dismiss="modal"><i class="fas fa-times fa-fw fa-lg"></i>
               Fechar </button>
             <button class="btn btn-success btn-lg" type="submit">
@@ -1072,9 +1184,7 @@
             <h5 class="modal-title" style="font-family: 'Advent Pro', sans-serif; font-weight: 500; letter-spacing: 1px; color:orange">Novo Proceso nº:&nbsp;
             </h5>
             <h5 class="modal-title text-primary" style="font-family: 'Advent Pro', sans-serif; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;">
-              <?php
-              echo nProcesso("processos", "{$_GET['id']}");
-              ?>
+              <?= nProcesso("processos", "{$_GET['id']}"); ?>
             </h5>
 
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -1213,13 +1323,15 @@
   function setaDadosModalProcesso(valor) {
     document.getElementById('idPessoaCliente').value = valor;
 
-  }
+  };
+
+  function modalIdProcesso(valor) {
+    document.getElementById('idProcesso').value = valor;
+  };
 
   function setaDadosModal(valor) {
     document.getElementById('idPessoaCliente').value = valor;
-    alert(valor);
-
-  }
+  };
 </script>
 <script>
   //document.getElementById('gestaoMenu').classList.add("menu-open");

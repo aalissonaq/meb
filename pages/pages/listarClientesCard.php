@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 style="font-family:'Advent Pro', sans-serif; font-weight: bold; color: #C77129">Clientes</h1>
+        <h1 style="font-family:'Advent Pro', sans-serif; font-weight: 400; color: #C77129">Clientes</h1>
       </div>
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right" style="font-family:'Advent Pro', sans-serif;">
@@ -27,7 +27,7 @@
       <div class="card-tools">
         <a href="" class="btn btn-tool text-orange" data-toggle="modal" data-target="#modal-novoUsuario" style="font-family:'Advent Pro', sans-serif; font-weight: bold; font-size: 1rem; letter-spacing: 1px;">
 
-          <i class="fa fa-plus-square fa-fw fa-2x align-middle"></i>
+          <i class="fa fa-plus-square fa-fw fa-2x"></i>
           Novo Clientes
         </a>
         <!-- <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
@@ -439,7 +439,6 @@
                 Obrigatório !
               </div>
             </div>
-
           </div>
 
       </div>

@@ -5,7 +5,7 @@
       <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
     </div>
     <div class="info">
-      <a href="#" class="d-block">Olá, </a>
+      <a href="#" class="d-block">Olá,</a>
     </div>
     <div class="info">
       <a href="#" class="d-block col-11 text-uppercase orange" style="font-family: 'Advent Pro', sans-serif; font-weight: 500; text-align: right;">
