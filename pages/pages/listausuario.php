@@ -186,7 +186,7 @@
 </section>
 <!-- /.content -->
 
-<!-- modal -->
+<!-- modal NOVO USUARIO -->
 <div class="modal fade" id="modal-novoUsuario">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">

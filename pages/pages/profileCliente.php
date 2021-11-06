@@ -41,7 +41,7 @@
                   echo "./upload/imgClientes/default.png";
                 }
                 ?>
-                " class="profile-user-img img-fluid img-circle" alt="User profile picture">
+                " class="profile-user-img img-fluid img-circle" alt="foto do Cliente <?= $dcliente['nmPessoa'] ?>" style="object-fit: cover;" />
               </div>
 
               <h3 class="profile-username text-center" style="font-family:'Advent Pro', sans-serif; font-weight: 600; color: #C77129; ">

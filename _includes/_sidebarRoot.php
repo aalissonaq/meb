@@ -1,15 +1,40 @@
 <div class="sidebar">
   <!-- Sidebar user panel (optional) -->
-  <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-    <div class="image">
-      <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+  <div class="user-panel mt-2 mb-2 pb-2 d-flex">
+    <div class="image img-fluid d-flex justify-content-end align-items-center" style="left:.5rem">
+      <img src="
+                    <?php
+                    if ($_SESSION['FOTO']) {
+                      echo " ./upload/fotoPessoas/{$_SESSION['FOTO']}";
+                    } else {
+                      echo "./upload/fotoPessoas/default.png";
+                    } ?>" alt="
+                  <?= $_SESSION['FOTO'] ?>" class=" profile-user-img img-fluid img-circle shadow user-image" style="min-width:3rem; min-height:3rem; object-fit: cover;
+                  position: relative;  border: 0px solid transparent; background: linear-gradient(#c77129,60%, #6368B1); background-clip: padding-box; padding: 1px;
+
+                  " />
     </div>
+
     <div class="info">
-      <a href="#" class="d-block">Olá,</a>
-    </div>
-    <div class="info">
-      <a href="#" class="d-block col-11 text-uppercase orange" style="font-family: 'Advent Pro', sans-serif; font-weight: 500; text-align: right;">
-        <?= $_SESSION['USUARIO']; ?>
+      <a href="#" class="text-capitalize">
+        <p class="">
+          olá,
+        </p>
+        <span class="text-orange lead align-middle" style="font-family: 'Advent Pro', sans-serif; font-weight: 300; letter-spacing: 0.5%; margin-top: -1.3rem; position: absolute;">
+
+          <?php
+
+          $nome =  explode(' ', $_SESSION['USUARIO']);
+
+          if (!isset($nome[1])) {
+            echo $nome[0];
+          } elseif (strlen($nome[1]) > 2) {
+            echo $nome[0] . ' ' . $nome[1];
+          } elseif (isset($nome[2])) {
+            echo $nome[0] . ' ' . $nome[1] . ' ' . $nome[2];
+          }
+          ?>
+        </span>
       </a>
     </div>
     <div class="info">
