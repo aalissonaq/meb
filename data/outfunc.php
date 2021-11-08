@@ -366,7 +366,7 @@ function upLoadFile($file, $tamanho, array $extensoes, $pasta, $largura = null)
 
 
   // Faz a verificação da extensão do arquivo
-  $extensao = strtolower(end(explode('.', @$file['name'])));
+  $extensao = strtolower(explode('.', $file['name'])[1]);
   if (array_search($extensao, $_UP['extensoes']) === false) {
 
     foreach ($extensoes as $filds => $values) {
@@ -396,11 +396,12 @@ function upLoadFile($file, $tamanho, array $extensoes, $pasta, $largura = null)
   //   </script>";
   //  }
   // Cria um nome baseado no UNIX TIMESTAMP atual
-  $nome_final = time() . '.' . substr($file['name'], -3);
+  // $nome_final = time() . '.' . substr($file['name'], -3);
+  $nome_final = time() . '.' . explode('.', $file['name'])[1];
 
   //$tipo = strtolower(reset(explode('/', $file['type'])));
 
-  if (strtolower(reset(explode('/', @$file['type']))) == 'image') {
+  if (strtolower(explode('/', $file['type'])[1]) == 'image') {
     // Cria identificador para nova imagem
     if ($file['type'] == "image/jpeg") {
       $img = imagecreatefromjpeg($file['tmp_name']);

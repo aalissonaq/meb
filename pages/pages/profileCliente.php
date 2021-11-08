@@ -20,9 +20,12 @@
 <section class="content">
   <?php
 
+
   $idEdit = $_GET['id'];
   $dadosPessoa = ler("vw_pessoa_cliente", '', "WHERE idPassoaPessoa = '{$idEdit}'")->fetchAll(PDO::FETCH_ASSOC);
   foreach ($dadosPessoa as $dcliente) {
+
+    // foreach (lerJoin('pessoa', 'clientes', 'idPessoa', 'LEFT', 'WHERE pessoa.idPessoa =1')->fetchAll(PDO::FETCH_ASSOC) as $dcliente) {
 
   ?>
     <div class="container-fluid">
@@ -35,10 +38,10 @@
               <div class="text-center">
                 <img src="
                 <?php
-                if ($dcliente['imgCliente']) {
-                  echo "./upload/imgClientes/{$dcliente['imgCliente']}";
+                if ($dcliente['foto']) {
+                  echo "./upload/fotoPessoas/{$dcliente['foto']}";
                 } else {
-                  echo "./upload/imgClientes/default.png";
+                  echo "./upload/fotoPessoas/default.png";
                 }
                 ?>
                 " class="profile-user-img img-fluid img-circle" alt="foto do Cliente <?= $dcliente['nmPessoa'] ?>" style="object-fit: cover;" />
@@ -210,7 +213,7 @@
                             <i class="fas fa-hashtag fa-fw"></i>
                           </th>
                           <th class="col-mb-2 text-center align-middle ">Tarefa</th>
-                          <th class="col-mb-2 text-center align-middle ">Rsponsável</th>
+                          <th class="col-mb-2 text-center align-middle ">Responsável</th>
                           <th class="col-mb-2 text-center align-middle ">Data e Hora</th>
 
                           <th class="col-md-auto text-center align-middle">
@@ -968,7 +971,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title" style="font-family: 'Advent Pro', sans-serif; font-weight: 500; letter-spacing: 1px; color:#C77129">
-              Nova Foto do Cliente</h4>
+              Trocar Foto</h4>
 
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -977,9 +980,9 @@
           <div class="modal-body">
             <!-- form novo Usuário -->
 
-            <form class="needs-validation" novalidate action="./pages/pages/acoes/editarFotoCliente.php" method="POST" enctype="multipart/form-data">
+            <form class="needs-validation" novalidate action="./pages/pages/acoes/editarFoto.php" method="POST" enctype="multipart/form-data">
 
-              <input type="hidden" name="idPessoaCliente" id="idPessoaCliente" value="">
+              <input type="hidden" name="idPessoa" id="idPessoa" value="">
               <input type="hidden" name="nomePessoa" id="nomePessoa" value="<?= $dcliente['nmPessoa']; ?>">
 
               <div class="form-row">
@@ -1330,7 +1333,7 @@
   };
 
   function setaDadosModal(valor) {
-    document.getElementById('idPessoaCliente').value = valor;
+    document.getElementById('idPessoa').value = valor;
   };
 </script>
 <script>

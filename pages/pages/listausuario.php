@@ -55,6 +55,8 @@
             $ler = ler("vw_pessoa_user", '', "WHERE nivelUser > 0 ORDER BY id ASC");
             $listar = $ler->fetchAll(PDO::FETCH_ASSOC);
             foreach ($listar as $dados) {
+              $idPessoa = $dados['idPessoaPessoa'];
+              $nomePessoa = $dados['nmPessoa'];
               $cont = $cont + 1;
             ?>
               <tr>
@@ -155,11 +157,17 @@
                                     <a href=\"?page=edtPasswdUsuario&idEdit={$dados['id']}\" class=\"btn btn-tool\" target=\"\"
                                     title=\"Trocar Senha\" rel=\"noopener noreferrer\">
                                       <!-- <i class=\"fas fa-key fa-lg\"></i> -->
-                                      <i class=\"mdi mdi-shield-key-outline  fa fa-2x\"></i>
+                                      <i class=\"mdi mdi-shield-key-outline fa fa-2x\"></i>
                                     </a>
                                   </li>
-
                               ";
+                    ?>
+
+                        <button data-toggle="modal" data-target="#modal-edtFoto" onclick="setaDadosModal(<?= $dados['idPessoaPessoa']; ?> )" class="btn btn-tool \" target="" title="Trocar Foto" rel="noopener noreferrer\">
+                          <i class="mdi mdi-camera-flip-outline  fa fa-2x fa-fw align-middle"></i>
+                        </button>
+
+                    <?php
                         break;
                     }
                     ?>
@@ -407,6 +415,66 @@
 </div>
 <!-- /.modal -->
 
+<!-- MODAL EDITAR FOTO -->
+<div class="modal fade" id="modal-edtFoto">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="font-family: 'Advent Pro', sans-serif; font-weight: 500; letter-spacing: 1px; color:#C77129">
+          Tocar Foto Usuário</h4>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- form novo Usuário -->
+
+        <form class="needs-validation" novalidate action="./pages/pages/acoes/editarFoto.php" method="POST" enctype="multipart/form-data">
+
+          <input type="hidden" name="idPessoa" id="idPessoa" value="">
+          <input type="hidden" name="nomePessoa" id="nomePessoa" value="<?= $nomePessoa; ?>">
+
+          <div class="form-row">
+            <div class="col-md-12 mb-3">
+              <label for="foto">Foto/Logo do Cliente <span class="text-orange">*</span>
+
+              </label>
+              <input type="file" name="foto" class="form-control-lg text-uppercase" id="foto" placeholder="">
+              <div class="invalid-feedback">
+                Obrigatório !
+              </div>
+            </div>
+
+          </div>
+
+      </div>
+      <div class="modal-footer justify-content-between">
+
+        <input type="hidden" name="userActionLog" value="<?php echo $_SESSION['USUARIO']; ?>" />
+        <input type="hidden" name="gravar" value="gravar" />
+        <button type="button" class="btn btn-outline-danger btn-lg" data-dismiss="modal">
+          <i class="fas fa-times fa-fw fa-lg"></i>
+          Fechar </button>
+        <button class="btn btn-success btn-lg" type="submit">
+          <i class="far fa-save fa-fw fa-lg"></i>
+          Gravar Dados</button>
+        </form>
+        <!--/form novo Usuario -->
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<script>
+  function setaDadosModal(valor) {
+    document.getElementById('idPessoa').value = valor;
+  };
+</script>
 
 <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jq-3.3.1/dt-1.10.20/b-1.6.1/b-html5-1.6.1/b-print-1.6.1/r-2.2.3/datatables.min.js">
 </script>

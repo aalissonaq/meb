@@ -16,7 +16,7 @@ if ($lerPessoa->rowCount() != 0) {
     $_SESSION['ID'] = $dadosP['idPessoa'];
     $_SESSION['USUARIO'] = $dadosP['nmPessoa'];
     $_SESSION['CPFCNPJ'] = $dadosP['docPessoa'];
-    $_SESSION['FOTO'] = $dadosUser['foto'];
+    $_SESSION['FOTO'] = $dadosP['foto'];
 
     $lerUser = ler("users", '', "WHERE idPessoa = '{$dadosP['idPessoa']}'
           AND passUser ='{$login['senha']}' AND flStatusUser = '1' ");

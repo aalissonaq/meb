@@ -28,6 +28,20 @@ function ler($tabela, $cond1 = null, $where = null)
   $lendo->execute();
   return $lendo;
 }
+/*****************************
+/*         LER DADOS COM JOIN         *
+/*****************************/
+
+function lerJoin($tabela1, $tabela2, $refColun, $join = null, $cond1 = null, $where = null)
+{
+  $cond1 = ($cond1 != null ? $cond1 : '*');
+  $join = ($join != null ? $join : 'INNER');
+  $where = ($where != null ? $where : '');
+  $pdo = connect();
+  $lendo = connect()->prepare("SELECT {$cond1} FROM {$tabela1} {$join} JOIN {$tabela2} ON {$tabela1}.{$refColun}={$tabela2}.{$refColun} {$where}");
+  $lendo->execute();
+  return $lendo;
+}
 
 /*****************************
  *       INSERIR DADOS        *
